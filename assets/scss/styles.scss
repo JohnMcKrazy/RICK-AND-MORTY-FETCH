@@ -63,6 +63,7 @@ body {
     height: 15rem;
     background: var(--white);
     color: var(--blackOff);
+    z-index: 10;
     .subtitle_header {
         color: var(--blackOff);
     }
@@ -135,34 +136,83 @@ body {
     }
 }
 .card {
+    position: relative;
     background: var(--whiteOff);
     color: black;
-    border-radius: 0.5rem;
     width: 300px;
-    height: fit-content;
-    cursor: pointer;
-    overflow: hidden;
-    .character_info_container {
-        .character_caracteristics {
-            color: var(--gray);
-        }
-        .accent {
-            color: var(--secondColor);
-        }
-
-        .accent_id {
-            color: var(--firstColor);
-        }
-        .character_basic_info {
+    height: 300px;
+    border-radius: 0.5rem;
+    .character_caracteristics {
+        color: var(--gray);
+    }
+    .accent {
+        color: var(--firstColor);
+    }
+    .accent_id {
+        color: var(--firstColor);
+    }
+    .character_img_container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+        border-radius: 0.5rem;
+        background-size: contain;
+        transition: background 0.3s ease;
+        .character_basic_info_container {
+            position: absolute;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
             padding: 0.5rem 0.5rem;
-            border-bottom: solid 0.1rem var(--firstColor);
             text-align: center;
+            opacity: 1;
+            transition: all 0.3s ease;
             .character_name {
                 color: var(--firstColor);
             }
         }
-        .character_more_info {
-            padding: 1rem 1rem;
+        .btn_info {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            bottom: 1rem;
+            left: 50%;
+            transform: translate(-50%, 0);
+            color: var(--blackOff);
+            width: 50%;
+            height: 2rem;
+            background: var(--whiteOff);
+            border-radius: 0.5rem;
+            cursor: pointer;
         }
+    }
+    .character_info_container {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        background: var(--whiteOff);
+        transform: translateY(0);
+        width: 100%;
+        padding: 1rem 1.5rem;
+        border-radius: 0.5rem;
+        height: fit-content;
+        z-index: 0;
+        transition: transform 0.3s ease;
+    }
+}
+.card_show_info {
+    .character_img_container {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        z-index: 3;
+    }
+    .character_info_container {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        transform: translateY(100%);
+        z-index: 2;
     }
 }

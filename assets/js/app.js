@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCleanSerch = document.getElementById('clean_serch');
     const btnUp = document.querySelector('.btn_up');
     const templateCard = document.getElementById('template_card').content;
-    console.log(templateCard);
     //? **************************************************************//
 
     //! VARIABLES
@@ -46,12 +45,14 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(nameResults);
         nameResults.forEach((name) => {
             //!CREATE
-
-            console.log(name.name);
+            //*console.log(name.name);
             let cloneTemplate = templateCard.cloneNode(true);
             let templateContent = cloneTemplate;
-
-            let characterImg = templateContent.querySelector('.character_img');
+            let characterCard = templateContent.querySelector('#card');
+            let characterImg = templateContent.querySelector('.character_img_container');
+            let characterBasicInfo = templateContent.querySelector('.character_basic_info_container');
+            let btnInfo = templateContent.querySelector('.btn_info');
+            let btnInfoText = templateContent.querySelector('.btn_info_text');
             let characterName = templateContent.querySelector('.character_name');
             let characterOrigin = templateContent.querySelector('.character_origin');
             let characterLocation = templateContent.querySelector('.character_location');
@@ -60,7 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let characterStatus = templateContent.querySelector('.character_status');
             let characterEpisodes = templateContent.querySelector('.character_episodes');
             let characterId = templateContent.querySelector('.character_id');
-            characterImg.setAttribute('src', name.image);
+            characterImg.style.background = ` linear-gradient(var(--blackOff), transparent),url(\"${name.image}\") center center`;
+
+            btnInfoText.textContent = 'Show more';
             characterName.textContent = name.name;
             //*console.log(characterName);
             characterOrigin.textContent = name.origin.name;
@@ -76,7 +79,25 @@ document.addEventListener('DOMContentLoaded', () => {
             characterSpecie.textContent = name.species;
             //*console.log(name.species);
             characterId.textContent = name.id;
-            console.log(name.id);
+            //*console.log(name.id);
+            const showInfoCharacter = () => {
+                if (btnInfoText.textContent == 'Show more') {
+                    characterCard.classList.add('card_show_info');
+                    btnInfoText.textContent = 'Show less';
+                } else if ((btnInfoText.textContent = 'Show less')) {
+                    characterCard.classList.remove('card_show_info');
+                    btnInfoText.textContent = 'Show more';
+                }
+            };
+            characterCard.addEventListener('mouseenter', () => {
+                characterImg.style.background = `url(\"${name.image}\") center center`;
+                characterBasicInfo.style.opacity = '0';
+            });
+            characterCard.addEventListener('mouseleave', () => {
+                characterImg.style.background = ` linear-gradient(var(--blackOff), transparent),url(\"${name.image}\") center center`;
+                characterBasicInfo.style.opacity = '1';
+            });
+            btnInfo.addEventListener('click', showInfoCharacter);
             fragment.appendChild(cloneTemplate);
         });
         cardsList.appendChild(fragment);
