@@ -1,23 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
     //! CONSTANTS
     const fragment = document.createDocumentFragment();
-    const cardsList = document.getElementById('cards_list');
-    const inputName = document.getElementById('name_input');
-    const btnSerchName = document.getElementById('btn_serch_name');
-    const btnCleanSerch = document.getElementById('clean_serch');
+    const header = document.querySelector('.header');
+    const cardsList = document.querySelector('#cards_list');
+    const inputName = document.querySelector('#name_input');
+    const btnsearchName = document.querySelector('#btn_search_name');
+    const btnCleanInput = document.querySelector('#btn_clean_input');
+    const btntrashsearch = document.querySelector('#trash_search');
     const btnUp = document.querySelector('.btn_up');
-    const templateCard = document.getElementById('template_card').content;
+    const templateCard = document.querySelector('#template_card').content;
     //? **************************************************************//
 
     //! VARIABLES
     let apiRickLink = 'https://rickandmortyapi.com/api/character';
-    let nameSerched = '';
+    let namesearched = '';
+    let sumOfClicks = 0;
+    //! *********************************************************/
 
-    //? **************************************************************//
     //!REUSABLE FUNCTIONS
 
-    //? **************************************************************//
+    //! *********************************************************/
+
     //!FETCH FUNCTIONS
+    //?SERCH BY NAME FETCH
     const fetchByName = async (name) => {
         try {
             const res = await fetch(apiRickLink + `/?name=${name}`);
@@ -30,24 +35,43 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    //? **************************************************************//
+    //! *********************************************************/
+
     //!FUNCTIONS
+    //? SCRAP INPUT VALUE FOR CHECK NAME
     const inputNameValue = () => {
-        nameSerched = inputName.value;
-        fetchByName(nameSerched);
+        namesearched = inputName.value;
+        fetchByName(namesearched);
     };
+    //! *********************************************************/
+
+    //!CLEAR INPUT DATA
+    const cleanInput = () => {
+        namesearched = '';
+        inputName.value = namesearched;
+    };
+
+    //! *********************************************************/
+    //?CREATE DATA FOR CARDS FUNCTION
     const createDataCard = (data) => {
-        cleanSerch();
+        //!trash DATA FUNCTION
+        trashsearch();
+        //!SET TOP 0 FUNCTION
         setTimeout(() => {
             toTheTop();
         }, 500);
+        //!START searchING
         let nameResults = data.results;
         console.log(nameResults);
         nameResults.forEach((name) => {
             //!CREATE
             //*console.log(name.name);
+            //!CLONE TEMPLATE TO CREATE CARDS
             let cloneTemplate = templateCard.cloneNode(true);
             let templateContent = cloneTemplate;
+            //! *********************************************************/
+
+            //!QUERY SELECTORS FROM TEMPLATE CLONES -- SET AFTER CREATE CLONE
             let characterCard = templateContent.querySelector('#card');
             let characterImg = templateContent.querySelector('.character_img_container');
             let characterBasicInfo = templateContent.querySelector('.character_basic_info_container');
@@ -61,8 +85,10 @@ document.addEventListener('DOMContentLoaded', () => {
             let characterStatus = templateContent.querySelector('.character_status');
             let characterEpisodes = templateContent.querySelector('.character_episodes');
             let characterId = templateContent.querySelector('.character_id');
-            characterImg.style.background = ` linear-gradient(var(--blackOff), transparent),url(\"${name.image}\") center center`;
+            //! *********************************************************/
 
+            //!SET INFO FETCH API TO CLONE TEMPLATE
+            characterImg.style.background = ` linear-gradient(var(--blackOff), transparent),url(\"${name.image}\") center center`;
             btnInfoText.textContent = 'Show more';
             characterName.textContent = name.name;
             //*console.log(characterName);
@@ -80,7 +106,12 @@ document.addEventListener('DOMContentLoaded', () => {
             //*console.log(name.species);
             characterId.textContent = name.id;
             //*console.log(name.id);
+            //! *********************************************************/
+
+            //!FUNCTION FOR CLICK IN SHOW MORE BTN
             const showInfoCharacter = () => {
+                sumOfClicks += 3;
+                console.log(sumOfClicks);
                 if (btnInfoText.textContent == 'Show more') {
                     characterCard.classList.add('card_show_info');
                     btnInfoText.textContent = 'Show less';
@@ -89,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     btnInfoText.textContent = 'Show more';
                 }
             };
+            //!EVENTLISTENERS INNER FUNCTION FROM CARD HOVER
             characterCard.addEventListener('mouseenter', () => {
                 characterImg.style.background = `url(\"${name.image}\") center center`;
                 characterBasicInfo.style.opacity = '0';
@@ -100,9 +132,15 @@ document.addEventListener('DOMContentLoaded', () => {
             btnInfo.addEventListener('click', showInfoCharacter);
             fragment.appendChild(cloneTemplate);
         });
+        //! *********************************************************/
+
+        //!SET PROPERTIES FROM CLONE TEMPLATE TO CARD LIST
         cardsList.appendChild(fragment);
     };
-    const cleanSerch = () => {
+    //! *********************************************************/
+
+    //?trash SERCH FUNCTION
+    const trashsearch = () => {
         const cards = document.querySelectorAll('.card').forEach((card) => {
             card;
             if (cardsList.childElementCount == 0) {
@@ -115,15 +153,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     };
+    //! *********************************************************/
+
+    //?TO THE TOP FUNCTION
     const toTheTop = () => {
         setTimeout(() => {
             window.scrollTo(0, 0);
         }, 200);
     };
-    //? **************************************************************//
-    //! ADDEVENTLISTENERS
+    //! *****************************************************************/
 
-    btnSerchName.addEventListener('click', inputNameValue);
-    btnCleanSerch.addEventListener('click', cleanSerch);
+    //! ADDEVENTLISTENERS
+    btnsearchName.addEventListener('click', inputNameValue);
+    btnCleanInput.addEventListener('click', cleanInput);
+    btntrashsearch.addEventListener('click', trashsearch);
     btnUp.addEventListener('click', toTheTop);
 });

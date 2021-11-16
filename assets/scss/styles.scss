@@ -28,19 +28,20 @@ body {
     letter-spacing: 0.02rem;
 
     .btn_up {
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
         display: flex;
         justify-content: center;
         align-items: center;
+        background: var(--whiteOff);
         width: 4rem;
         height: 4rem;
         padding: 1rem;
         border-radius: 1rem;
-        position: fixed;
-        bottom: 1rem;
-        right: 1rem;
-        background: var(--whiteOff);
         cursor: pointer;
         transition: all 0.2s ease;
+        z-index: 9999;
         #arrow_down_svg {
             transform: rotate(180deg);
             fill: var(--blackOff);
@@ -56,77 +57,107 @@ body {
     left: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: baseline;
     align-items: center;
+    text-align: center;
     padding: 1rem 2rem;
     width: 100%;
-    height: 15rem;
+    height: fit-content;
     background: var(--white);
     color: var(--blackOff);
-    z-index: 10;
+    z-index: 100000;
     .subtitle_header {
         color: var(--blackOff);
     }
-    input[type='text'] {
-        text-align: center;
-        width: clamp(300px, 700px, 95%);
-        border: none;
-        background: var(--whiteOff);
-        border-radius: 0.5rem;
-        padding: 0.5rem 0.5rem;
-        margin: 0.5rem 0;
-        transition: background 0.5s ease;
-    }
-    input[type='text']:focus {
-        outline: none;
-        background: hsl(0, 0, 89%);
-    }
 
-    .btns_container {
+    .search_container {
         display: flex;
-        justify-content: space-between;
-        margin-top: 1rem;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        margin: 1rem 0 0.5rem;
         width: clamp(300px, 900px, 100%);
 
-        #btn_serch_name {
+        input[type='text'] {
+            text-align: center;
+            width: clamp(300px, 700px, 95%);
+            border: none;
+            background: var(--whiteOff);
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.5rem;
+            margin: 0.5rem 0;
+            transition: background 0.5s ease;
+        }
+        input[type='text']:focus {
+            outline: none;
+            background: hsl(0, 0, 89%);
+        }
+        .btn_input {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 0.2rem 2rem;
+            width: 3rem;
+            height: 3rem;
+            border: solid 0.15rem var(--firstColor);
             border-radius: 0.5rem;
-            color: var(--firstColor);
-            border: solid 0.2rem var(--firstColor);
+            padding: 0.5rem;
             cursor: pointer;
             transition: all 0.5s ease;
         }
-        #btn_serch_name:hover {
-            background: var(--secondColor);
-            border-color: var(--secondColor);
-            color: var(--whiteOff);
-        }
-        .clean_btn_container {
-            width: 2rem;
-            height: fit-content;
-            cursor: pointer;
-            #trash_icon {
-                transition: fill 0.5s ease;
-                fill: var(--firstColor);
+        #btn_search_name {
+            .search_svg {
+                .cls-1 {
+                    fill: var(--firstColor);
+                    transition: fill 0.3s ease;
+                }
             }
         }
-        .clean_btn_container:hover {
-            #trash_icon {
-                fill: var(--secondColor);
+        #btn_clean_input {
+            .cross_svg {
+                transform: scale(0.7);
+                .cls-1 {
+                    fill: var(--firstColor);
+                }
             }
         }
     }
 }
 #cards_section {
+    position: relative;
+    margin-top: 13rem;
+    padding: 2rem, clamp(1rem, 4rem, 2rem);
+    width: 100%;
+    .trash_btn_container {
+        position: fixed;
+        bottom: 6rem;
+        right: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: var(--whiteOff);
+        width: 4rem;
+        height: 4rem;
+        padding: 1rem;
+        border-radius: 1rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        z-index: 9999;
+        #trash_icon {
+            transition: fill 0.5s ease;
+            fill: var(--firstColor);
+        }
+    }
+    .trash_btn_container:hover {
+        #trash_icon {
+            fill: var(--secondColor);
+        }
+    }
+}
+#cards_section_content {
     display: flex;
     justify-content: center;
-    margin-top: 15rem;
-    width: 100%;
     .cards_container {
-        margin-top: 4rem;
+        margin: 4rem 0 15rem;
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
