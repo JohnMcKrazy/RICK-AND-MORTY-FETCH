@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputName = document.getElementById('name_input');
     const btnSerchName = document.getElementById('btn_serch_name');
     const btnCleanSerch = document.getElementById('clean_serch');
+    const btnUp = document.querySelector('.btn_up');
     const templateCard = document.getElementById('template_card').content;
     console.log(templateCard);
     //? **************************************************************//
@@ -37,6 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchByName(nameSerched);
     };
     const createDataCard = (data) => {
+        cleanSerch();
+        setTimeout(() => {
+            toTheTop();
+        }, 500);
         let nameResults = data.results;
         console.log(nameResults);
         nameResults.forEach((name) => {
@@ -77,16 +82,27 @@ document.addEventListener('DOMContentLoaded', () => {
         cardsList.appendChild(fragment);
     };
     const cleanSerch = () => {
-        console.log(cardsList);
-        if (cardsList.childElementCount == 0) {
-            console.log('No necesitas borrar');
-        } else if (cardsList.childElementCount > 0) {
-            console.log('Necesitas borrar');
-        }
+        const cards = document.querySelectorAll('.card').forEach((card) => {
+            card;
+            if (cardsList.childElementCount == 0) {
+                console.log('No necesitas borrar');
+            } else if (cardsList.childElementCount > 0) {
+                console.log(card);
+                cardsList.removeChild(card);
+                console.log(cardsList);
+                console.log('Necesitas borrar');
+            }
+        });
+    };
+    const toTheTop = () => {
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+        }, 200);
     };
     //? **************************************************************//
     //! ADDEVENTLISTENERS
 
     btnSerchName.addEventListener('click', inputNameValue);
     btnCleanSerch.addEventListener('click', cleanSerch);
+    btnUp.addEventListener('click', toTheTop);
 });
