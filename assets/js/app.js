@@ -142,14 +142,11 @@ document.addEventListener('DOMContentLoaded', () => {
     //?trash SERCH FUNCTION
     const trashsearch = () => {
         const cards = document.querySelectorAll('.card').forEach((card) => {
-            card;
-            if (cardsList.childElementCount == 0) {
-                console.log('No necesitas borrar');
-            } else if (cardsList.childElementCount > 0) {
+            if (cardsList.childElementCount > 0) {
                 console.log(card);
                 cardsList.removeChild(card);
                 console.log(cardsList);
-                console.log('Necesitas borrar');
+                console.log('Cards borradas');
             }
         });
     };
