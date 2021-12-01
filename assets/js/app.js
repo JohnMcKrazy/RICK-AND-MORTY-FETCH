@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const btntrashsearch = document.querySelector('#trash_search');
     const btnUp = document.querySelector('.btn_up');
     const templateCard = document.querySelector('#template_card').content;
-    console.log('prueba');
     //? **************************************************************//
 
     //! VARIABLES
